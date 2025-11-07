@@ -1,0 +1,51 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nome: MyString
+  versao_dotnet: MyString
+  ef_core: MyText
+  problema_detalhado: MyText
+  observacao: MyText
+  tipo_authority: MyString
+  usa_sauron: false
+  total_dlls: 1
+  acao: MyString
+  authority: MyString
+  restsharp: MyString
+  sdk_usado: MyString
+  pacotes_criticos: MyString
+  risco: MyString
+  risco_motivo: MyText
+  tipo_auth: MyString
+  tipo: MyString
+  impacto_quebra: MyString
+  linguagem: MyString
+  total_pacotes: 1
+  recomendacao_detalhada: MyText
+  pacotes_nuget: MyText
+  usa_jwt_manual: false
+
+two:
+  nome: MyString
+  versao_dotnet: MyString
+  ef_core: MyText
+  problema_detalhado: MyText
+  observacao: MyText
+  tipo_authority: MyString
+  usa_sauron: false
+  total_dlls: 1
+  acao: MyString
+  authority: MyString
+  restsharp: MyString
+  sdk_usado: MyString
+  pacotes_criticos: MyString
+  risco: MyString
+  risco_motivo: MyText
+  tipo_auth: MyString
+  tipo: MyString
+  impacto_quebra: MyString
+  linguagem: MyString
+  total_pacotes: 1
+  recomendacao_detalhada: MyText
+  pacotes_nuget: MyText
+  usa_jwt_manual: false

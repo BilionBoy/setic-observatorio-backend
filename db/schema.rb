@@ -1,0 +1,56 @@
+# This file is auto-generated from the current state of the database. Instead
+# of editing this file, please use the migrations feature of Active Record to
+# incrementally modify your database, and then regenerate this schema definition.
+#
+# This file is the source Rails uses to define your schema when running `bin/rails
+# db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
+# be faster and is potentially less error prone than running all of your
+# migrations from scratch. Old migrations may fail to apply correctly if those
+# migrations use external dependencies or application code.
+#
+# It's strongly recommended that you check this file into your version control system.
+
+ActiveRecord::Schema[7.2].define(version: 2025_11_07_132535) do
+  create_table "aplicacoes", force: :cascade do |t|
+    t.string "nome"
+    t.string "versao_dotnet"
+    t.text "ef_core"
+    t.text "problema_detalhado"
+    t.text "observacao"
+    t.string "tipo_authority"
+    t.boolean "usa_sauron"
+    t.integer "total_dlls"
+    t.string "acao"
+    t.string "authority"
+    t.string "restsharp"
+    t.string "sdk_usado"
+    t.string "pacotes_criticos"
+    t.string "risco"
+    t.text "risco_motivo"
+    t.string "tipo_auth"
+    t.string "tipo"
+    t.string "impacto_quebra"
+    t.string "linguagem"
+    t.integer "total_pacotes"
+    t.text "recomendacao_detalhada"
+    t.text "pacotes_nuget"
+    t.boolean "usa_jwt_manual"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "prontidao_migracao"
+    t.text "justificativa_prontidao"
+  end
+
+  create_table "dependencias", force: :cascade do |t|
+    t.integer "aplicacao_id", null: false
+    t.string "gerenciador"
+    t.string "nome"
+    t.string "versao"
+    t.boolean "critica"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["aplicacao_id"], name: "index_dependencias_on_aplicacao_id"
+  end
+
+  add_foreign_key "dependencias", "aplicacoes"
+end

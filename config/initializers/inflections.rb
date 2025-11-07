@@ -1,0 +1,6 @@
+ # frozen_string-literal: true
+
+ ActiveSupport::Inflector.inflections(:en) do |inflect|
+  inflect.irregular "aplicacao",   "aplicacoes"
+  inflect.irregular "dependencia", "dependencias"
+ end
