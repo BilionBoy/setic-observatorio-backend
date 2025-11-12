@@ -1,19 +1,9 @@
 class Aplicacao < ApplicationRecord
-  has_many :dependencias, dependent: :destroy
+  def self.ransackable_attributes(auth_object = nil)
+    column_names
+  end
 
-  def explode_dependencias!
-    return if pacotes_nuget.blank? || pacotes_nuget == "-"
-
-    lista = pacotes_nuget.split(";").map(&:strip).reject(&:blank?)
-    lista.each do |item|
-      nome, versao = item.split(":").map(&:strip)
-      proximo = Dependencia.pacotes_criticos_padrao.any? { |c| nome&.include?(c) }
-      dependencias.create!(
-        gerenciador: "nuget",
-        nome: nome.presence || "Desconhecido",
-        versao: versao,
-        critica: proximo
-      )
-    end
+  def self.ransackable_associations(auth_object = nil)
+    reflect_on_all_associations.map(&:name).map(&:to_s)
   end
 end

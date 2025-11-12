@@ -39,4 +39,6 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+  gem "pagy", "~> 5.10"
+  gem "ransack"
 end

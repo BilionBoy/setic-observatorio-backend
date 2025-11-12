@@ -1,40 +1,47 @@
 module Api
   module V1
     class AplicacoesController < ApplicationController
+      include Pagy::Backend
+      include JsonResponse
+      include PagyPagination
+
       before_action :set_aplicacao, only: [ :show ]
 
       # GET /api/v1/aplicacoes
       def index
-        apps = Aplicacao.all
+        query = Aplicacao.ransack(params[:q])
+        apps = query.result(distinct: true)
 
-        # filtros
-        apps = apps.where(risco: params[:risco]) if params[:risco].present?
-        apps = apps.where(linguagem: params[:linguagem]) if params[:linguagem].present?
-        apps = apps.where("prontidao_migracao >= ?", params[:min_prontidao]) if params[:min_prontidao].present?
-        apps = apps.where(usa_sauron: true) if params[:usa_sauron].to_s.downcase == "true"
-        apps = apps.where(usa_jwt_manual: true) if params[:usa_jwt_manual].to_s.downcase == "true"
+        # Ordenação padrão
+        apps = apps.order(prontidao_migracao: :desc) if params[:ordenar_por].blank?
 
-        # ordenação
-        if params[:ordenar_por].present?
-          ordem = params[:ordem].presence_in(%w[asc desc]) || "desc"
-          apps = apps.order("#{params[:ordenar_por]} #{ordem}")
-        else
-          apps = apps.order(prontidao_migracao: :desc)
-        end
+        # Paginação e formatação padronizada
+        response = paginate(apps, params[:per_page] || 300)
 
-        render json: apps.limit(params[:limite].presence || 500).as_json(
-          only: [ :id, :nome, :risco, :linguagem, :versao_dotnet, :prontidao_migracao, :acao ],
-          methods: [ :justificativa_prontidao ]
+        render_success(
+          data: {
+            pagination: response[:pagy],
+            items: response[:items].as_json(
+              only: [
+                :id, :nome, :risco, :linguagem,
+                :versao_dotnet, :ef_core,
+                :prontidao_migracao, :pacotes_nuget, :acao
+              ],
+              methods: [ :justificativa_prontidao ]
+            )
+          },
+          message: "Aplicações listadas com sucesso"
         )
       end
 
       # GET /api/v1/aplicacoes/:id
       def show
-        render json: @aplicacao.as_json(
-          include: {
-            dependencias: { only: [ :nome, :versao, :critica ] }
-          },
-          except: [ :created_at, :updated_at ]
+        render_success(
+          data: @aplicacao.as_json(
+            include: { dependencias: { only: [ :nome, :versao, :critica ] } },
+            except: [ :created_at, :updated_at ]
+          ),
+          message: "Aplicação carregada com sucesso"
         )
       end
 
@@ -50,14 +57,26 @@ module Api
           usa_jwt_manual: Aplicacao.where(usa_jwt_manual: true).count,
           usa_sauron: Aplicacao.where(usa_sauron: true).count
         }
-        render json: dados
+
+        render_success(data: dados, message: "Estatísticas consolidadas com sucesso")
       end
 
       # GET /api/v1/aplicacoes/candidatas
       def candidatas
-        apps = Aplicacao.order(prontidao_migracao: :desc).limit(params[:limite].presence || 50)
-        render json: apps.as_json(
-          only: [ :id, :nome, :linguagem, :versao_dotnet, :prontidao_migracao, :acao, :risco ]
+        apps = Aplicacao.order(prontidao_migracao: :desc)
+        response = paginate(apps, params[:limite] || 50)
+
+        render_success(
+          data: {
+            pagination: response[:pagy],
+            items: response[:items].as_json(
+              only: [
+                :id, :nome, :linguagem, :versao_dotnet,
+                :ef_core, :prontidao_migracao, :acao, :pacotes_nuget, :risco
+              ]
+            )
+          },
+          message: "Aplicações candidatas listadas com sucesso"
         )
       end
 
