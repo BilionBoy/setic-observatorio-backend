@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_11_07_132535) do
+ActiveRecord::Schema[7.2].define(version: 2025_11_17_150312) do
   create_table "aplicacoes", force: :cascade do |t|
     t.string "nome"
     t.string "versao_dotnet"
@@ -52,5 +52,58 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_07_132535) do
     t.index ["aplicacao_id"], name: "index_dependencias_on_aplicacao_id"
   end
 
+  create_table "dependencias_internas", force: :cascade do |t|
+    t.integer "sauron_modulo_id", null: false
+    t.string "nome"
+    t.string "versao"
+    t.boolean "critica"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["sauron_modulo_id"], name: "index_dependencias_internas_on_sauron_modulo_id"
+  end
+
+  create_table "sauron_modulos", force: :cascade do |t|
+    t.string "nome"
+    t.string "linguagem"
+    t.string "versao_dotnet"
+    t.string "tipo_projeto"
+    t.boolean "ef_core"
+    t.string "ef_core_versao"
+    t.text "pacotes_nuget_lista"
+    t.integer "pacotes_nuget_qtd"
+    t.text "referencias_internas"
+    t.boolean "usa_identityserver"
+    t.boolean "usa_ldap"
+    t.boolean "usa_jwt_manual"
+    t.string "tipo_banco"
+    t.boolean "possui_migrations"
+    t.integer "qtde_migrations"
+    t.text "connectionstring_nomes"
+    t.string "connectionstring_principal"
+    t.boolean "usa_hangfire"
+    t.boolean "usa_quartz"
+    t.boolean "usa_backgroundservice"
+    t.boolean "usa_serilog"
+    t.boolean "usa_log4net"
+    t.boolean "usa_swagger"
+    t.boolean "usa_automapper"
+    t.boolean "usa_mediatr"
+    t.boolean "usa_middleware_custom"
+    t.boolean "tem_startup"
+    t.boolean "usa_program_antigo"
+    t.text "policies"
+    t.text "controllers"
+    t.text "dbcontexts"
+    t.integer "services_transient"
+    t.integer "services_scoped"
+    t.integer "services_singleton"
+    t.text "observacao"
+    t.text "acao_recomendada"
+    t.string "impacto"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   add_foreign_key "dependencias", "aplicacoes"
+  add_foreign_key "dependencias_internas", "sauron_modulos"
 end
