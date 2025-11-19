@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_11_17_150312) do
+ActiveRecord::Schema[7.2].define(version: 2025_11_19_120635) do
   create_table "aplicacoes", force: :cascade do |t|
     t.string "nome"
     t.string "versao_dotnet"
@@ -104,6 +104,27 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_17_150312) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "scan_results", force: :cascade do |t|
+    t.string "scan_file"
+    t.string "scan_name"
+    t.integer "critical"
+    t.integer "high"
+    t.integer "medium"
+    t.integer "low"
+    t.float "cvss_base_score_max"
+    t.float "cvssv3_base_score_max"
+    t.integer "total"
+    t.integer "aplicacao_id"
+    t.string "aplicacao_nome"
+    t.string "versao_dotnet"
+    t.text "ef_core"
+    t.string "linguagem"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["aplicacao_id"], name: "index_scan_results_on_aplicacao_id"
+  end
+
   add_foreign_key "dependencias", "aplicacoes"
   add_foreign_key "dependencias_internas", "sauron_modulos"
+  add_foreign_key "scan_results", "aplicacoes"
 end

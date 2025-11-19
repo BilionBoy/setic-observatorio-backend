@@ -1,0 +1,33 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  scan_file: MyString
+  scan_name: MyString
+  critical: 1
+  high: 1
+  medium: 1
+  low: 1
+  cvss_base_score_max: 1.5
+  cvssv3_base_score_max: 1.5
+  total: 1
+  aplicacao: one
+  aplicacao_nome: MyString
+  versao_dotnet: MyString
+  ef_core: MyText
+  linguagem: MyString
+
+two:
+  scan_file: MyString
+  scan_name: MyString
+  critical: 1
+  high: 1
+  medium: 1
+  low: 1
+  cvss_base_score_max: 1.5
+  cvssv3_base_score_max: 1.5
+  total: 1
+  aplicacao: two
+  aplicacao_nome: MyString
+  versao_dotnet: MyString
+  ef_core: MyText
+  linguagem: MyString

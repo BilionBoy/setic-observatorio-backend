@@ -22,6 +22,9 @@ Rails.application.routes.draw do
           get :dependencias
         end
       end
+      resources :scan_results, only: [ :index, :show ]
+      get "scan",     to: "scan_results#index"
+      get "scan/:id", to: "scan_results#show"
     end
   end
 
