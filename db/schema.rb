@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_11_19_120635) do
+ActiveRecord::Schema[7.2].define(version: 2025_12_01_170730) do
+  create_table "aplicacao_dependencias", force: :cascade do |t|
+    t.integer "aplicacao_id", null: false
+    t.integer "dependente_id", null: false
+    t.string "origem_tag"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["aplicacao_id", "dependente_id"], name: "idx_app_dep_uniq", unique: true
+    t.index ["aplicacao_id"], name: "index_aplicacao_dependencias_on_aplicacao_id"
+    t.index ["dependente_id"], name: "index_aplicacao_dependencias_on_dependente_id"
+  end
+
   create_table "aplicacoes", force: :cascade do |t|
     t.string "nome"
     t.string "versao_dotnet"
@@ -39,6 +50,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_19_120635) do
     t.datetime "updated_at", null: false
     t.integer "prontidao_migracao"
     t.text "justificativa_prontidao"
+    t.string "tipo_app"
+    t.string "papel_arquitetural"
   end
 
   create_table "dependencias", force: :cascade do |t|
@@ -124,6 +137,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_19_120635) do
     t.index ["aplicacao_id"], name: "index_scan_results_on_aplicacao_id"
   end
 
+  add_foreign_key "aplicacao_dependencias", "aplicacoes"
+  add_foreign_key "aplicacao_dependencias", "aplicacoes", column: "dependente_id"
   add_foreign_key "dependencias", "aplicacoes"
   add_foreign_key "dependencias_internas", "sauron_modulos"
   add_foreign_key "scan_results", "aplicacoes"
