@@ -6,4 +6,7 @@
   inflect.irregular "sauron_modulo",         "sauron_modulos"
   inflect.irregular "dependencia_interna",   "dependencias_internas"
   inflect.irregular "scan_result",           "scan_results"
+  inflect.irregular "lotacao",               "lotacoes"
+  inflect.irregular "servidor",              "servidores"
+  inflect.irregular "incosistencia",         "incosistencias"
  end

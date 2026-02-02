@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  servidor: one
+  sistema: MyString
+  campo: MyString
+  raw_key: MyString
+  contexto: MyString
+  mensagem: MyText
+
+two:
+  servidor: two
+  sistema: MyString
+  campo: MyString
+  raw_key: MyString
+  contexto: MyString
+  mensagem: MyText

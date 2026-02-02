@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_12_01_170730) do
+ActiveRecord::Schema[7.2].define(version: 2025_12_19_122021) do
   create_table "aplicacao_dependencias", force: :cascade do |t|
     t.integer "aplicacao_id", null: false
     t.integer "dependente_id", null: false
@@ -75,6 +75,13 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_01_170730) do
     t.index ["sauron_modulo_id"], name: "index_dependencias_internas_on_sauron_modulo_id"
   end
 
+  create_table "lotacoes", force: :cascade do |t|
+    t.string "nome"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["nome"], name: "index_lotacoes_on_nome", unique: true
+  end
+
   create_table "sauron_modulos", force: :cascade do |t|
     t.string "nome"
     t.string "linguagem"
@@ -137,9 +144,21 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_01_170730) do
     t.index ["aplicacao_id"], name: "index_scan_results_on_aplicacao_id"
   end
 
+  create_table "servidores", force: :cascade do |t|
+    t.string "matricula"
+    t.string "nome"
+    t.integer "quantidade_erros"
+    t.integer "lotacao_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lotacao_id"], name: "index_servidores_on_lotacao_id"
+    t.index ["matricula"], name: "index_servidores_on_matricula", unique: true
+  end
+
   add_foreign_key "aplicacao_dependencias", "aplicacoes"
   add_foreign_key "aplicacao_dependencias", "aplicacoes", column: "dependente_id"
   add_foreign_key "dependencias", "aplicacoes"
   add_foreign_key "dependencias_internas", "sauron_modulos"
   add_foreign_key "scan_results", "aplicacoes"
+  add_foreign_key "servidores", "lotacoes"
 end

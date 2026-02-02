@@ -1,0 +1,2 @@
+class Lotacao < ApplicationRecord
+end
